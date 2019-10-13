@@ -80,6 +80,15 @@ public class DefaultArgumentParser implements ArgumentParser {
             throw new ArgumentFormatException(argument, type);
         }
 
+        try {
+            // UUID
+            if (type.equals(java.util.UUID.class)) {
+                return (T) java.util.UUID.fromString(argument);
+            }
+        } catch (IllegalArgumentException ex) {
+            throw new ArgumentFormatException(argument, type);
+        }
+
         // date
         if (type.equals(Date.class)) {
             return (T) parseDate(argument, type);
